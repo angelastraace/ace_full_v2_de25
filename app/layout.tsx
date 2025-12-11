@@ -1,33 +1,35 @@
-import type React from "react"
-import "@/app/globals.css"
-import { Inter } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
-import { ToastProvider } from "@/components/ui/toast"
-import { AssetProvider } from "@/contexts/asset-context"
-import { AuthProvider } from "@/contexts/auth-context"
-import { WalletProvider } from "@/contexts/wallet-context"
+import React from "react";
+import "@/app/globals.css";
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ToastProvider } from "@/components/ui/toast";
+import { AssetProvider } from "@/contexts/asset-context";
+import { AuthProvider } from "@/contexts/auth-context";
+import { WalletProvider } from "@/contexts/wallet-context";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ACE Exchange - The Future of Crypto Trading",
   description: "The world's most advanced, secure, and rewarding cryptocurrency exchange",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5",
+  generator: "v0.app",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  // themeColor can live here and support media queries too
   themeColor: "#001219",
-    generator: 'v0.app'
-}
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#001219" />
-      </head>
       <body className={`${inter.className} bg-ace-dark text-white overflow-x-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <AuthProvider>
@@ -43,8 +45,11 @@ export default function RootLayout({
             </WalletProvider>
           </AuthProvider>
         </ThemeProvider>
-      {/* v0 – built-with badge */}
-  <div dangerouslySetInnerHTML={{ __html: `<div id="v0-built-with-button-1937883c-cec0-410d-b960-298d6464d57d" style="
+
+        {/* v0 – built-with badge */}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `<div id="v0-built-with-button-1937883c-cec0-410d-b960-298d6464d57d" style="
 border: 1px solid hsl(0deg 0% 100% / 12%);
 position: fixed;
 bottom: 24px;
@@ -125,8 +130,10 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 ">
   v0
 </span>
-</div>` }} />
-</body>
+</div>`,
+          }}
+        />
+      </body>
     </html>
-  )
+  );
 }

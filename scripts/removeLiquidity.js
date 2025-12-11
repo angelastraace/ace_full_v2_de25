@@ -1,10 +1,10 @@
 /**
- * scripts/addEthUsdcLiquidity.js
- * Example liquidity script using ethers v6 and env RPC selection
+ * scripts/removeLiquidity.js
+ * Scaffold to remove liquidity using ethers v6 and env RPC selection
  */
 
 require('dotenv').config({ path: require('path').resolve(process.cwd(), '.env.local') });
-const { JsonRpcProvider, Wallet, formatEther } = require('ethers');
+const { JsonRpcProvider, Wallet } = require('ethers');
 
 function getRpcUrl() {
   if (process.env.ETHEREUM_RPC_URL) return process.env.ETHEREUM_RPC_URL;
@@ -14,23 +14,22 @@ function getRpcUrl() {
 
 async function main() {
   const RPC = getRpcUrl();
-  console.log('Using RPC URL:', RPC);
   const provider = new JsonRpcProvider(RPC);
 
   const ADMIN_PK = process.env.ADMIN_WALLET_PRIVATE_KEY;
   if (!ADMIN_PK) {
-    console.error('ADMIN_WALLET_PRIVATE_KEY is required in env to run this script.');
+    console.error('ADMIN_WALLET_PRIVATE_KEY required');
     process.exit(1);
   }
   const wallet = new Wallet(ADMIN_PK, provider);
 
-  const balance = await provider.getBalance(wallet.address);
-  console.log('Admin ETH balance:', formatEther(balance));
-  console.log('Add liquidity logic goes here (scaffold).');
+  console.log('Using RPC:', RPC);
+  console.log('Admin wallet:', wallet.address);
+  console.log('This is a scaffold - implement remove liquidity logic here.');
 }
 
 if (require.main === module) {
-  main().catch(err => { console.error(err); process.exit(1); });
+  main().catch(e => { console.error(e); process.exit(1); });
 }
 
 module.exports = main;
