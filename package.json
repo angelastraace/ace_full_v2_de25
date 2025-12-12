@@ -53,6 +53,7 @@
     "lint": "next lint",
     "run:add-liquidity": "node scripts/addEthUsdcLiquidity.js",
     "run:remove-liquidity": "node scripts/removeLiquidity.js",
-    "run:admin-fund": "node scripts/admin_fund_cli.js"
+    "run:admin-fund": "node scripts/admin_fund_cli.js",
+    "db:dump": "sh ./scripts/dump_supabase_db.sh"
   }
 }
