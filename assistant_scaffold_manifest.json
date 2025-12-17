@@ -1,0 +1,32 @@
+{
+  "created": [
+    "app/live/page.tsx",
+    "app/trading/page.tsx",
+    "app/life/page.tsx",
+    "app/wallet/page.tsx",
+    "app/kat/page.tsx",
+    "app/id/page.tsx",
+    "app/ace-kat/page.tsx",
+    "app/dreamstate/page.tsx",
+    "app/learn/page.tsx",
+    "app/marketplace/page.tsx",
+    "app/xp/page.tsx",
+    "app/achievements/page.tsx",
+    "components/AdminOnchainFundingPanel.tsx",
+    "components/AchievementsPanel.tsx",
+    "components/XPConstellationDemo.tsx",
+    "scripts/addEthUsdcLiquidity.js",
+    "ADD_STAFFER_NOTE.md"
+  ],
+  "merged_logic": [
+    "components/AdminOnchainFundingPanel.tsx (updated with handleSend + simulated API)",
+    "components/AchievementsPanel.tsx (fetches /api/achievements)",
+    "components/XPConstellationDemo.tsx (visual demo)",
+    "pages/api/achievements.ts (dev sample)",
+    "pages/api/user_xp.ts (dev sample)",
+    "pages/api/admin_fund.ts (dev sample)",
+    "app/achievements/page.tsx (wired)",
+    "app/xp/page.tsx (wired)",
+    "app/wallet/page.tsx (wired)"
+  ]
+}
