@@ -1,7 +1,7 @@
 "use server"
 
 import { ethers } from "ethers"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/app/lib/supabaseClient"
 
 /**
  * Fund the admin wallet from a different source

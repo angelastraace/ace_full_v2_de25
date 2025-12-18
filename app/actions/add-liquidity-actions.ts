@@ -1,7 +1,7 @@
 "use server"
 
 import { ethers } from "ethers"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/app/lib/supabaseClient"
 import { POSITION_MANAGER_ADDRESS, TICK_SPACINGS } from "@/app/lib/constants"
 import { POSITION_MANAGER_ABI } from "@/app/lib/abis"
 import { getFormattedPrivateKey } from "@/app/lib/utils"

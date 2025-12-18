@@ -1,7 +1,7 @@
 "use server"
 
 import { ethers } from "ethers"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/app/lib/supabaseClient"
 
 // ERC20 Token ABI for token operations
 const ERC20_ABI = [

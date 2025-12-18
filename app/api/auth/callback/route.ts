@@ -1,23 +1,34 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-export const dynamic = "force-dynamic"
+export async function GET(req: Request) {
+  const cookieStore = cookies();
 
-export async function GET(req: NextRequest) {
-  try {
-    const code = req.nextUrl.searchParams.get("code")
-    const error = req.nextUrl.searchParams.get("error")
-
-    if (error) {
-      return NextResponse.redirect(new URL(`/login?error=${error}`, req.nextUrl.origin))
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name, value, options) {
+          cookieStore.set({ name, value, ...options });
+        },
+        remove(name, options) {
+          cookieStore.set({ name, value: "", ...options });
+        },
+      },
     }
+  );
 
-    if (!code) {
-      return NextResponse.redirect(new URL("/login?error=no_code", req.nextUrl.origin))
-    }
+  const { searchParams } = new URL(req.url);
+  const code = searchParams.get("code");
 
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl.origin))
-  } catch (error) {
-    console.error("[v0] Auth callback error:", error)
-    return NextResponse.redirect(new URL("/login?error=callback_failed", req.nextUrl.origin))
+  if (code) {
+    await supabase.auth.exchangeCodeForSession(code);
   }
+
+  return NextResponse.redirect(new URL("/dashboard", req.url));
 }

@@ -1,7 +1,7 @@
 "use server"
 
 import { ethers } from "ethers"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/app/lib/supabaseClient"
 
 // Uniswap V3 Router address
 const ROUTER_ADDRESS = "0xE592427A0AEce92De3Edee1F18E0157C05861564"

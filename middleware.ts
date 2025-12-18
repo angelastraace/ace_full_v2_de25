@@ -1,41 +1,59 @@
-import { type NextRequest, NextResponse } from "next/server"
+// middleware.ts
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
-export async function middleware(request: NextRequest) {
-  // Get the pathname of the request (e.g. /, /about, /blog/first-post)
-  const { pathname } = request.nextUrl
+export async function middleware(req: NextRequest) {
+  // Always create a mutable response FIRST
+  let res = NextResponse.next({
+    request: {
+      headers: req.headers,
+    },
+  });
 
-  // Admin routes protection
-  if (pathname.startsWith("/admin")) {
-    // In production, check for admin role in Supabase
-    // For now, allow access - add proper auth checks here
-    return NextResponse.next()
-  }
-
-  // Protected routes that require authentication
-  const protectedRoutes = ["/dashboard", "/trade", "/earn", "/staking", "/vip", "/rewards", "/profile", "/settings"]
-
-  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
-    // Check for auth token in request
-    const token = request.cookies.get("auth-token")?.value
-
-    if (!token) {
-      // Redirect to login if not authenticated
-      return NextResponse.redirect(new URL("/login", request.url))
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return req.cookies.getAll();
+        },
+        setAll(cookies) {
+          cookies.forEach(({ name, value, options }) => {
+            res.cookies.set(name, value, options);
+          });
+        },
+      },
     }
+  );
+
+  // IMPORTANT: getUser reads session from cookies
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const pathname = req.nextUrl.pathname;
+
+  // Public routes (expand later if needed)
+  const publicRoutes = ["/login", "/signup", "/"];
+
+  const isPublic = publicRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  if (!user && !isPublic) {
+    const loginUrl = new URL("/login", req.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  return NextResponse.next()
+  return res;
 }
 
+// Match everything except static assets
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!_next/static|_next/image|favicon.ico|robots.txt).*)",
   ],
-}
+};

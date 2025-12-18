@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { createContext, useContext, useState, useCallback } from "react"
-import { connectWallet, disconnectWallet, getWalletBalance } from "@/lib/wallet"
+import { connectWallet, disconnectWallet, getWalletBalance } from "@/app/lib/wallet"
 
 interface WalletContextType {
   address: string | null

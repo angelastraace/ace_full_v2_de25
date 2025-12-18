@@ -1,7 +1,7 @@
 "use server"
 
 import { ethers } from "ethers"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/app/lib/supabaseClient"
 
 // Uniswap V3 NonfungiblePositionManager address
 const NONFUNGIBLE_POSITION_MANAGER = "0xC36442b4a4522E871399CD717aBDD847Ab11FE88"

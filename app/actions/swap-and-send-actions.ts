@@ -1,7 +1,7 @@
 "use server"
 
 import { ethers } from "ethers"
-import { supabase } from "@/lib/supabaseClient"
+import { supabase } from "@/app/lib/supabaseClient"
 import { ROUTER_ADDRESS } from "@/app/lib/constants"
 import { getFormattedPrivateKey, normalizeNumberInput } from "@/app/lib/utils"
 import { ERC20_ABI } from "@/app/lib/abis"

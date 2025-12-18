@@ -32,7 +32,7 @@ import {
 import { Progress } from "@/components/ui/progress"
 
 import { getTokenBalance, getNativeBalance } from "@/utils/token-sync"
-import { isPrivateKeyConfigured } from "@/lib/wallet-utils"
+import { isPrivateKeyConfigured } from "@/app/lib/wallet-utils"
 import { sendAdminReward, sendTransaction } from "@/app/actions/blockchain-actions"
 import { transferTokenFromPool } from "@/app/actions/token-transfer-actions"
 

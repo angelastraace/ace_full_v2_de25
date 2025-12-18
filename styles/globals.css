@@ -2,12 +2,251 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Plain CSS only – no @apply */
 html,
 body {
+  background: black;
+  color: white;
   margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background: #000000;
-  color: #ffffff;
+@keyframes ace-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.ace-animated {
+  background-size: 300% 300%;
+  animation: ace-gradient 6s ease infinite;
+}
+
+<div
+  className={skin.animated ? "ace-animated" : ""}
+  style={{
+    background: `linear-gradient(90deg, ${skin.metadata.gradient.join(",")})`
+  }}
+/>
+/* ACE Kat animations */
+@keyframes ace-pulse {
+  0% { box-shadow: 0 0 0px rgba(0,255,255,.2); }
+  50% { box-shadow: 0 0 20px rgba(0,255,255,.8); }
+  100% { box-shadow: 0 0 0px rgba(0,255,255,.2); }
+}
+
+@keyframes ace-cosmic {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.ace-pulse {
+  animation: ace-pulse 3s ease-in-out infinite;
+}
+
+.ace-cosmic {
+  animation: ace-cosmic 8s linear infinite;
+}
+import { redirect } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import Link from "next/link";
+
+export default async function HomePage() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Logged-in users should not see marketing
+  if (user) {
+    redirect("/dashboard");
+  }
+
+  return (
+    <main className="min-h-screen bg-black text-white">
+      {/* HERO */}
+      <section className="px-6 py-32 max-w-6xl mx-auto text-center">
+        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight">
+          ACE Exchange
+        </h1>
+
+        <p className="mt-6 text-xl text-gray-300">
+          Trade. Learn. Level up.
+        </p>
+
+        <p className="mt-4 max-w-2xl mx-auto text-gray-400">
+          Not a casino.  
+          Not a promise machine.  
+          A real crypto exchange that rewards skill, patience,
+          and participation.
+        </p>
+
+        <div className="mt-10 flex justify-center gap-4">
+          <Link
+            href="/signup"
+            className="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition"
+          >
+            Enter ACE
+          </Link>
+
+          <Link
+            href="/about"
+            className="px-6 py-3 rounded-lg border border-gray-700 text-gray-300 hover:border-gray-500 transition"
+          >
+            Explore the system
+          </Link>
+        </div>
+      </section>
+
+      {/* WHAT IS ACE */}
+      <section className="px-6 py-24 max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold mb-6">
+          What is ACE?
+        </h2>
+
+        <p className="text-gray-300 leading-relaxed">
+          ACE is a crypto exchange with a progression system.
+          <br /><br />
+          You trade, learn, stake, and participate —
+          and the platform responds by unlocking features,
+          lowering fees, and rewarding you with XP, tiers,
+          and cosmetics.
+          <br /><br />
+          No gimmicks.  
+          No fake APRs.  
+          No “one lucky trade” nonsense.
+        </p>
+
+        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-400">
+          <li>• Spot & advanced trading</li>
+          <li>• On-chain liquidity & yield</li>
+          <li>• Learn-to-earn modules</li>
+          <li>• Seasonal rankings & rewards</li>
+          <li>• Transparent fee routing</li>
+        </ul>
+      </section>
+
+      {/* DIFFERENT */}
+      <section className="px-6 py-24 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold mb-12">
+          Built for people who stay.
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-gray-300">
+          <div>
+            <h3 className="font-semibold mb-2">🎯 Progression</h3>
+            <p>
+              XP and tiers reward consistent behavior —
+              not reckless bets.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-2">🧠 Learn → Earn</h3>
+            <p>
+              Education is part of the product.
+              Knowledge unlocks rewards.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-2">🎨 Identity</h3>
+            <p>
+              Frames, avatars, and cosmetics reflect
+              your journey on ACE.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-2">🔍 Transparency</h3>
+            <p>
+              Fees, rewards, and mechanics are visible
+              and auditable.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* PROGRESSION */}
+      <section className="px-6 py-24 max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold mb-6">
+          Your journey on ACE
+        </h2>
+
+        <p className="text-gray-300 mb-6">
+          As you use ACE, you gain XP.
+          <br />
+          XP unlocks tiers.
+          <br />
+          Tiers unlock lower fees, cosmetics, features,
+          and access.
+        </p>
+
+        <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+          <span>Bronze</span>
+          <span>→</span>
+          <span>Silver</span>
+          <span>→</span>
+          <span>Gold</span>
+          <span>→</span>
+          <span>Diamond</span>
+          <span>→</span>
+          <span className="text-white font-semibold">ACE</span>
+        </div>
+      </section>
+
+      {/* SECURITY */}
+      <section className="px-6 py-24 max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold mb-6">
+          Security without theater
+        </h2>
+
+        <p className="text-gray-300">
+          Funds are not mixed with marketing.
+          <br />
+          Admin actions are logged.
+          <br />
+          Critical systems can be paused instantly.
+          <br />
+          On-chain operations are verifiable.
+          <br /><br />
+          ACE is designed to survive bad days.
+        </p>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="px-6 py-32 text-center">
+        <p className="text-gray-400 mb-6">
+          You don’t need to believe.
+          <br />
+          You can inspect.
+        </p>
+
+        <div className="flex justify-center gap-4">
+          <Link
+            href="/signup"
+            className="px-6 py-3 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition"
+          >
+            Create account
+          </Link>
+
+          <Link
+            href="/docs"
+            className="px-6 py-3 rounded-lg border border-gray-700 text-gray-300 hover:border-gray-500 transition"
+          >
+            Read the docs
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
 }

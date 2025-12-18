@@ -1,15 +1,20 @@
-import "@/styles/globals.css"
+import "./globals.css";
+import type { ReactNode } from "react";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-black text-white">
-        {children}
+    <html lang="en">
+      <body>
+        {/* 🌌 BACKGROUND */}
+        <div className="space-bg">
+          <div className="stars" />
+        </div>
+
+        {/* 🧱 APP CONTENT */}
+        <div className="relative z-10 min-h-screen">
+          {children}
+        </div>
       </body>
     </html>
-  )
+  );
 }

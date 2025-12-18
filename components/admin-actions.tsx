@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader2, AlertCircle, CheckCircle2, AlertTriangle } from "lucide-react"
-import { sendAdminReward } from "@/lib/sendFromLiquidityPool"
-import { removeAndFundAdmin } from "@/lib/removeLiquidityAndFundAdmin"
+import { sendAdminReward } from "@/app/lib/sendFromLiquidityPool"
+import { removeAndFundAdmin } from "@/app/lib/removeLiquidityAndFundAdmin"
 
 export default function AdminActions() {
   // State for environment variables check
